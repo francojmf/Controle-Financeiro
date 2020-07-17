@@ -30,6 +30,12 @@ APP_PORT=3001 (exemplo para a porta onde o app vai conectar com o backend)
 - Persistência de Dados em banco de dados MongoDB Atlas. 
 - FrontEnd com React usando "components".
 - Single-page aplication.
+- Seletor para selecionar o mês com informações.
+- Botão para abrir janela e adicionar novo lançamento.
+- Campo para escrever nome e fazer pesquisa nos dados em tela.
+- Filtro de categoria dos dados na tela.
+- Ícone para abrir janela e editar lançamento.
+- Ícone para excluir lançamento.
 - Possibilidade de publicação no Heroku.
 
 ## Screen
