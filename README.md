@@ -29,4 +29,10 @@ APP_PORT=3001 (exemplo para a porta onde o app vai conectar com o backend)
 - Desenvolvimento das operações CRUD em backend Javascript moderno com pacotes do Node JS. 
 - Persistência de Dados em banco de dados MongoDB Atlas. 
 - FrontEnd com React usando "components".
+- Single-page aplication.
 - Possibilidade de publicação no Heroku.
+
+## Screen
+
+
+
