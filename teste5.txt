@@ -1,0 +1,19 @@
+import React from 'react';
+import SelectSearch from 'react';
+
+export default function SelectCategory() {
+  return (
+    <SelectSearch
+      options={[
+        { label: 'Lazer', value: 'Lazer' },
+        { label: 'Mercado', value: 'Mercado' },
+        { label: 'Receita', value: 'Receita' },
+        { label: 'Saúde', value: 'Saúde' },
+        { label: 'Transporte', value: 'Transporte' },
+      ]}
+      placeholder="Categorias"
+    />
+  );
+}
+
+
