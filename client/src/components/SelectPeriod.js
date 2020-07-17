@@ -45,7 +45,6 @@ export default function SelectPeriod({ value, onChange, periods }) {
           {formattedDates.map((period) => {
             const { abreviated } = period;
             const { date } = period;
-
             return (
               <option key={date} value={date}>
                 {abreviated}

@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 Modal.setAppElement('#root');
 
 export default function Transactions({ transactions, onClick, onEditClik }) {
-  const [selectedTransaction, setSelectedTransaction] = useState({});
+  const [setSelectedTransaction] = useState({});
 
   const handleEditClick = (transaction) => {
     setSelectedTransaction(transaction);

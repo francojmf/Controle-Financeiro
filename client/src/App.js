@@ -18,6 +18,7 @@ export default function App() {
   const [newTransaction, setNewTransaction] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [filterValue, setFilterValue] = useState('');
+  const [filterValue2, setFilterValue2] = useState('');
   const [selectedTransaction, setSelectedTransaction] = useState('');
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -50,9 +51,28 @@ export default function App() {
     }
   }, [period, filterValue]);
 
+  useEffect(() => {
+    const get = async () => {
+      setIsLoading(true);
+      const data = await transactionService.getTransactions(
+        period,
+        filterValue2
+      );
+      setTransactions(data.data);
+      setIsLoading(false);
+    };
+    if (!!period) {
+      get();
+    }
+  }, [period, filterValue2]);
+
   const getTransactions = async () => {
     setIsLoading(true);
-    const data = await transactionService.getTransactions(period, filterValue);
+    const data = await transactionService.getTransactions(
+      period,
+      filterValue,
+      filterValue2
+    );
     setTransactions(data.data);
     setIsLoading(false);
   };
@@ -78,6 +98,11 @@ export default function App() {
 
   const handleFilterChange = async (value) => {
     setFilterValue(value);
+    getTransactions();
+  };
+
+  const handleFilterChange2 = async (value) => {
+    setFilterValue2(value);
     getTransactions();
   };
 
@@ -198,6 +223,7 @@ export default function App() {
             <div className="nav-wrapper " style={{ height: '75px' }}>
               <EntryAndFilter
                 onChangeFilter={handleFilterChange}
+                onSelectFilter={handleFilterChange2}
                 onSave={handleNewEntry}
                 disabled={!period}
               />
