@@ -6,7 +6,7 @@ const transactionModel = require('../models/TransactionModel');
 async function find(req, res) {
   try {
     let data;
-    const { period, description } = req.query;
+    const { period, description, category } = req.query;
 
     if (!description) {
       data = await getData(period);
@@ -18,6 +18,11 @@ async function find(req, res) {
       console.log(
         `GET : Object (?period=${period}&description=${description})`
       );
+    }
+
+    if (period && category) {
+      data = await getDataByCategory(category, period);
+      console.log(`GET : Object (?period=${period}&category=${category})`);
     }
 
     res.send(data);
@@ -64,6 +69,20 @@ async function findDistinctPeriods(req, res) {
   }
 }
 
+async function getDataByCategory(category = '', filter) {
+  const regExFilter = /^[12]\d{3}-(0[1-9]|1[012])$/;
+
+  if (!filter.match(regExFilter)) {
+    throw { message: 'Informar periodo no formato AAAA-MM' };
+  }
+
+  if (!category) throw { message: 'Categoria vazia', errNumber: 406 };
+  const regEx = new RegExp(category, 'i');
+  return transactionModel
+    .find({ yearMonth: filter, category: regEx })
+    .sort({ yearMonthDay: 'asc' });
+}
+
 async function create(req, res) {
   try {
     const data = await transactionModel.create(req.body);
@@ -106,4 +125,10 @@ async function remove(req, res) {
   }
 }
 
-module.exports = { find, create, update, remove, findDistinctPeriods };
+module.exports = {
+  find,
+  create,
+  update,
+  remove,
+  findDistinctPeriods,
+};
