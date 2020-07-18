@@ -14,6 +14,14 @@ function getTransactions(period = '', filterValue = '') {
   return http.get(`/api/transaction?${query}`);
 }
 
+function getCategory(period = '', category = '') {
+  let query = `period=${period}`;
+  if (category) {
+    query += `&category=${category}&`;
+  }
+  return http.get(`/api/transaction?${query}`);
+}
+
 function deleteTransaction(query = '') {
   return http.delete(`/api/transaction?_id=${query}`);
 }
@@ -29,6 +37,7 @@ function postTransaction(data) {
 export default {
   getDistinctPeriods,
   getTransactions,
+  getCategory,
   deleteTransaction,
   updateTransaction,
   postTransaction,

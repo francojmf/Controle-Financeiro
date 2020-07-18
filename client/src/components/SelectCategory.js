@@ -2,7 +2,7 @@ import React from 'react';
 import M from 'materialize-css';
 
 export default function SelectCategory({ value, onSelectFilter, items }) {
-  const handleInputChange = (event) => {
+  const handleSelectChange = (event) => {
     onSelectFilter(event.target.value);
   };
 
@@ -16,15 +16,17 @@ export default function SelectCategory({ value, onSelectFilter, items }) {
   }, []);
 
   return (
-    <div>
+    <div style={{ padding: '10px' }}>
       <form onSubmit={handleSubmit}>
         <select
           className="browser-default"
           value={value}
-          onSelectFilter={handleInputChange}
+          onSelectFilter={handleSelectChange}
           style={{ fontSize: '1.2rem' }}
         >
-          <option value="">Categorias</option>
+          <option value="" disabled>
+            Categorias
+          </option>
           {items.map((item) => {
             return (
               <option key={item} value={item}>

@@ -37,7 +37,7 @@ export default function SelectPeriod({ value, onChange, periods }) {
           className="browser-default"
           value={value}
           onChange={handleChange}
-          style={{ fontSize: '0.9rem' }}
+          style={{ fontSize: '1.2rem' }}
         >
           <option value="" disabled>
             Escolha o período

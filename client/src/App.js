@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SelectPeriod from './components/SelectPeriod';
+import SelectCategory from './components/SelectCategory';
 import transactionService from './services/TransactionService';
 import ChangePeriodButton from './components/ChangePeriodButton';
 import '../src/css/selectPeriod.css';
@@ -14,11 +15,12 @@ import ModalTransaction from './components/ModalTransaction.js';
 export default function App() {
   const [period, setPeriod] = useState('');
   const [periods, setPeriods] = useState([]);
+  const [item, setItem] = useState('');
+  const [items, setItems] = useState([]);
   const [transactions, setTransactions] = useState([]);
   const [newTransaction, setNewTransaction] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [filterValue, setFilterValue] = useState('');
-  const [filterValue2, setFilterValue2] = useState('');
   const [selectedTransaction, setSelectedTransaction] = useState('');
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -51,34 +53,39 @@ export default function App() {
     }
   }, [period, filterValue]);
 
+  const getTransactions = async () => {
+    setIsLoading(true);
+    const data = await transactionService.getTransactions(period, filterValue);
+    setTransactions(data.data);
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     const get = async () => {
       setIsLoading(true);
-      const data = await transactionService.getTransactions(
-        period,
-        filterValue2
-      );
-      setTransactions(data.data);
+      const data = await transactionService.getCategory(period, item);
+      setItems(data.data);
       setIsLoading(false);
     };
     if (!!period) {
       get();
     }
-  }, [period, filterValue2]);
+  }, [period, item]);
 
-  const getTransactions = async () => {
+  const getCategory = async () => {
     setIsLoading(true);
-    const data = await transactionService.getTransactions(
-      period,
-      filterValue,
-      filterValue2
-    );
-    setTransactions(data.data);
+    const data = await transactionService.getCategory(period, item);
+    setItems(data.data);
     setIsLoading(false);
   };
 
   const handleListChange = (event) => {
     setPeriod(event.target.value);
+  };
+
+  const handleSelectChange = (event) => {
+    setItem(event.target.value);
+    getCategory();
   };
 
   const handleClickPeriodButton = (value) => {
@@ -98,11 +105,6 @@ export default function App() {
 
   const handleFilterChange = async (value) => {
     setFilterValue(value);
-    getTransactions();
-  };
-
-  const handleFilterChange2 = async (value) => {
-    setFilterValue2(value);
     getTransactions();
   };
 
@@ -206,6 +208,13 @@ export default function App() {
                     />
                   </li>
                   <li>
+                    <SelectCategory
+                      value={item}
+                      onSelectFilter={handleSelectChange}
+                      items={items}
+                    />
+                  </li>
+                  <li>
                     <ChangePeriodButton
                       icon="arrow_forward"
                       onClick={handleClickPeriodButton}
@@ -223,7 +232,6 @@ export default function App() {
             <div className="nav-wrapper " style={{ height: '75px' }}>
               <EntryAndFilter
                 onChangeFilter={handleFilterChange}
-                onSelectFilter={handleFilterChange2}
                 onSave={handleNewEntry}
                 disabled={!period}
               />

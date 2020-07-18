@@ -1,6 +1,5 @@
 import React from 'react';
 import ModalTransactionNewEntry from './ModalTransactionNewEntry.js';
-import SelectCategory from './SelectCategory';
 
 export default function EntryAndFilter({
   onChangeFilter,
@@ -27,9 +26,7 @@ export default function EntryAndFilter({
       <div className=" col s1 ">
         <ModalTransactionNewEntry onSave={handleSave} modalName="modal1" />
       </div>
-      <div>
-        <SelectCategory />
-      </div>
+
       <div className=" col s9 row" style={{ display: 'flex' }}>
         <div className=" col s9">
           <input disabled={disabled} type="text" onChange={handleInputChange} />
